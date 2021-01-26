@@ -1,0 +1,69 @@
+{
+    "name": "bgsu-lits/iiif",
+    "description": "IIIF Presentation manifest generator and viewer.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Kloor",
+            "email": "kloor@bgsu.edu"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "bgsu-lits/framework": "@dev",
+        "cocur/slugify": "^4.0",
+        "league/csv": "^9.6",
+        "slim/slim": "^4.7",
+        "thecodingmachine/safe": "^1.3",
+        "ulrichsg/getopt-php": "^3.4",
+        "yale-web-technologies/iiif-manifest-generator": "dev-fix-types"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.3",
+        "phpunit/phpunit": "^9",
+        "roave/security-advisories": "dev-master"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Lits\\": "src/Lits"
+        },
+        "exclude-from-classmap": [
+            "/src/Lits/Test/"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/BGSU-LITS/framework"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/BGSU-LITS/iiif-manifest-generator"
+        }
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "@composer bin all install --ansi"
+        ],
+        "post-update-cmd": [
+            "@composer bin all update --ansi"
+        ],
+        "phpcbf": "phpcbf ./ --standard=phpcs.xml",
+        "phpcs": "phpcs ./ --standard=phpcs.xml",
+        "phplint": "phplint ./ --exclude=vendor",
+        "phpstan": "phpstan analyse -c phpstan.neon",
+        "phpunit": "phpunit -c phpunit.xml",
+        "psalm": "psalm -c psalm.xml",
+        "test": [
+            "@phplint",
+            "@phpcs",
+            "@phpstan",
+            "@psalm",
+            "@phpunit"
+        ],
+        "twigcs": "twigcs ./template"
+    }
+}

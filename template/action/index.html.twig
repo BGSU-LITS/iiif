@@ -1,0 +1,46 @@
+{% set title = label ?? 'Index' %}
+{% extends 'page.html.twig' %}
+
+{% block content %}
+{% if manifests %}
+<table class="table">
+<thead>
+<tr>
+<th>Title</th>
+<th colspan="2">Files</th>
+<th colspan="3">Viewers</th>
+</tr>
+</thead>
+<tbody>
+{% for index, label in manifests %}
+<tr>
+<td><a href="{{ url_for('index', {'index': index}) }}">{{ label }}</a></td>
+<td><a href="{{ url_for('manifest', {'index': index}) }}" title="Manifest for {{ label }}">Manifest</a></td>
+<td><a href="{{ url_for('canvas', {'index': index}) }}" title="Canvases for {{ label }}">Canvases</a></td>
+<td><a href="{{ url_for('diva', {'index': index}) }}" title="View {{ label }} in Diva">Diva</a></td>
+<td><a href="{{ url_for('mirador', {'index': index}) }}" title="View {{ label }} in Mirador">Mirador</a></td>
+<td><a href="{{ url_for('tify', {'index': index}) }}" title="View {{ label }} in Tify">Tify</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+{{ parent() }}
+<nav aria-label="breadcrumb">
+<ol class="list-breadcrumb">
+<li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li><li aria-current="page">{{ title }}</li>
+</ol>
+</nav>
+<h2>Files</h2>
+<ul>
+<li><a href="{{ url_for('manifest', {'index': index}) }}">Manifest</a></li>
+<li><a href="{{ url_for('canvas', {'index': index}) }}">Canvases</a></li>
+</ul>
+<h2>Viewers</h2>
+<ul>
+<li><a href="{{ url_for('diva', {'index': index}) }}">Diva</a></li>
+<li><a href="{{ url_for('mirador', {'index': index}) }}">Mirador</a></li>
+<li><a href="{{ url_for('tify', {'index': index}) }}">Tify</a></li>
+</ul>
+{% endif %}
+{% endblock %}

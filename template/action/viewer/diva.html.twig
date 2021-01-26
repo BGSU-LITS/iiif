@@ -1,0 +1,25 @@
+{% extends 'page.html.twig' %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/diva.js@6.0.2/build/diva.css" />
+{% endblock %}
+
+{% block body %}
+<div id="diva-wrapper"></div>
+<script src="https://unpkg.com/diva.js@6.0.2/build/diva.js"></script>
+<script src="https://unpkg.com/diva.js@6.0.2/build/plugins/download.js"></script>
+<script src="https://unpkg.com/diva.js@6.0.2/build/plugins/manipulation.js"></script>
+<script src="https://unpkg.com/diva.js@6.0.2/build/plugins/metadata.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var diva = new Diva('diva-wrapper', {
+        objectData: "{{ id }}",
+        plugins: [
+            Diva.DownloadPlugin,
+            Diva.ManipulationPlugin,
+            Diva.MetadataPlugin
+        ]
+    });
+}, false);
+</script>
+{% endblock %}
