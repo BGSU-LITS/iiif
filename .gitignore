@@ -1,6 +1,6 @@
 composer.lock
 composer.phar
-settings.php
+/settings.php
 /vendor
 /vendor-bin/**/vendor
 /vendor-bin/**/composer.lock
