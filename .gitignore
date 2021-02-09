@@ -1,4 +1,5 @@
 composer.phar
+/node_modules
 /settings.php
 /vendor
 /vendor-bin/**/vendor

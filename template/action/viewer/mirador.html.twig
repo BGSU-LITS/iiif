@@ -2,7 +2,7 @@
 
 {% block body %}
 <div id="mirador"></div>
-<script src="https://unpkg.com/mirador@3.0.0/dist/mirador.min.js"></script>
+<script src="{{ url_for('index') }}node/mirador/mirador.min.js"></script>
 <script>
 Mirador.viewer({
     id: 'mirador',

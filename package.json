@@ -1,0 +1,16 @@
+{
+  "name": "iiif",
+  "version": "1.0.0",
+  "description": "IIIF Presentation manifest generator and viewer.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BGSU-LITS/iiif.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "diva.js": "^6.0.2",
+    "mirador": "^3.0.0",
+    "tify": "^0.24.2",
+    "universalviewer": "^3.0.22"
+  }
+}

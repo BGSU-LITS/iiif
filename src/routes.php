@@ -8,6 +8,7 @@ use Lits\Action\ManifestAction;
 use Lits\Action\Viewer\DivaViewerAction;
 use Lits\Action\Viewer\MiradorViewerAction;
 use Lits\Action\Viewer\TifyViewerAction;
+use Lits\Action\Viewer\UvViewerAction;
 use Lits\Command\ProcessCommand;
 use Lits\Framework;
 
@@ -31,4 +32,7 @@ return function (Framework $framework): void {
 
     $framework->app()->get('/{index}/tify', TifyViewerAction::class)
         ->setName('tify');
+
+    $framework->app()->get('/{index}/uv', UvViewerAction::class)
+        ->setName('uv');
 };

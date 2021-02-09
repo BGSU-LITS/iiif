@@ -20,6 +20,7 @@
 <td><a href="{{ url_for('diva', {'index': index}) }}" title="View {{ label }} in Diva">Diva</a></td>
 <td><a href="{{ url_for('mirador', {'index': index}) }}" title="View {{ label }} in Mirador">Mirador</a></td>
 <td><a href="{{ url_for('tify', {'index': index}) }}" title="View {{ label }} in Tify">Tify</a></td>
+<td><a href="{{ url_for('uv', {'index': index}) }}" title="View {{ label }} in Universal Viewer">Universal Viewer</a></td>
 </tr>
 {% endfor %}
 </tbody>
@@ -41,6 +42,7 @@
 <li><a href="{{ url_for('diva', {'index': index}) }}">Diva</a></li>
 <li><a href="{{ url_for('mirador', {'index': index}) }}">Mirador</a></li>
 <li><a href="{{ url_for('tify', {'index': index}) }}">Tify</a></li>
+<li><a href="{{ url_for('uv', {'index': index}) }}">Universal Viewer</a></li>
 </ul>
 {% endif %}
 {% endblock %}

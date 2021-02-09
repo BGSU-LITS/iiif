@@ -1,0 +1,31 @@
+{% extends 'page.html.twig' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('index') }}node/uv/uv.css"></style>
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#uv {
+    height: 100vh;
+    width: 100vw;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="uv"></div>
+<script>
+window.addEventListener('uvLoaded', function (e) {
+    createUV('#uv', {
+        iiifResourceUri: '{{ id }}',
+        root: '../node/uv'
+    }, new UV.URLDataProvider());
+}, false);
+</script>
+<script src="{{ url_for('index') }}node/uv/lib/offline.js"></script>
+<script src="{{ url_for('index') }}node/uv/helpers.js"></script>
+<script src="{{ url_for('index') }}node/uv/uv.js"></script>
+{% endblock %}
