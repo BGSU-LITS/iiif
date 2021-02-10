@@ -25,7 +25,7 @@ final class IndexAction extends Action
                 $json = $file->json($this->data['index'], 'manifest');
 
                 $context['index'] = $this->data['index'];
-                $context['label'] =
+                $context['title'] =
                     (string) ($json['label'] ?? $context['index']);
             } else {
                 $context['manifests'] = $file->list('*', 'manifest');

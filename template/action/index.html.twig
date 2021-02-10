@@ -1,4 +1,3 @@
-{% set title = label ?? 'Index' %}
 {% extends 'page.html.twig' %}
 
 {% block content %}
@@ -25,7 +24,7 @@
 {% endfor %}
 </tbody>
 </table>
-{% else %}
+{% elseif index %}
 {{ parent() }}
 <nav aria-label="breadcrumb">
 <ol class="list-breadcrumb">
@@ -44,5 +43,9 @@
 <li><a href="{{ url_for('tify', {'index': index}) }}">Tify</a></li>
 <li><a href="{{ url_for('uv', {'index': index}) }}">Universal Viewer</a></li>
 </ul>
+{% else %}
+<div class="alert alert-failure">
+No manifests are available.
+</div>
 {% endif %}
 {% endblock %}
