@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47f6104e5bb6e546546a59afd9765e65",
+    "content-hash": "3a218017624a9019d826d1b02b26c29c",
     "packages": [
         {
             "name": "bgsu-lits/framework",
@@ -53,42 +53,7 @@
                     "/src/Lits/Test/"
                 ]
             },
-            "scripts": {
-                "post-install-cmd": [
-                    "@composer bin all install --ansi"
-                ],
-                "post-update-cmd": [
-                    "@composer bin all update --ansi"
-                ],
-                "phpcbf": [
-                    "phpcbf ./ --standard=phpcs.xml"
-                ],
-                "phpcs": [
-                    "phpcs ./ --standard=phpcs.xml"
-                ],
-                "phplint": [
-                    "phplint ./ --exclude=vendor"
-                ],
-                "phpstan": [
-                    "phpstan analyse -c phpstan.neon"
-                ],
-                "phpunit": [
-                    "phpunit -c phpunit.xml"
-                ],
-                "psalm": [
-                    "psalm -c psalm.xml"
-                ],
-                "test": [
-                    "@phplint",
-                    "@phpcs",
-                    "@phpstan",
-                    "@psalm",
-                    "@phpunit"
-                ],
-                "twigcs": [
-                    "twigcs ./template"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -100,8 +65,8 @@
             ],
             "description": "Framework for applications based on Slim.",
             "support": {
-                "source": "https://github.com/BGSU-LITS/framework/tree/v1.0.0",
-                "issues": "https://github.com/BGSU-LITS/framework/issues"
+                "issues": "https://github.com/BGSU-LITS/framework/issues",
+                "source": "https://github.com/BGSU-LITS/framework/tree/v1.0.0"
             },
             "time": "2021-02-09T16:03:40+00:00"
         },
@@ -431,16 +396,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "7959c5ee8d50e75b8e39ff9e11041208c22a542a"
+                "reference": "c544710aa18e079baf0027ca4c8236913f46945b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/7959c5ee8d50e75b8e39ff9e11041208c22a542a",
-                "reference": "7959c5ee8d50e75b8e39ff9e11041208c22a542a",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/c544710aa18e079baf0027ca4c8236913f46945b",
+                "reference": "c544710aa18e079baf0027ca4c8236913f46945b",
                 "shasum": ""
             },
             "require": {
@@ -489,7 +454,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/4.1.1"
+                "source": "https://github.com/lcobucci/jwt/tree/4.1.2"
             },
             "funding": [
                 {
@@ -501,7 +466,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-02-16T09:59:04+00:00"
+            "time": "2021-02-19T19:37:15+00:00"
         },
         {
             "name": "league/csv",
@@ -2312,18 +2277,19 @@
         },
         {
             "name": "yale-web-technologies/iiif-manifest-generator",
-            "version": "dev-fix-types",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/BGSU-LITS/IIIF-Manifest-Generator.git",
-                "reference": "ec158c749ed4c2f7466c93d0a6ff110c6d83bdaa"
+                "url": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator.git",
+                "reference": "8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BGSU-LITS/IIIF-Manifest-Generator/zipball/ec158c749ed4c2f7466c93d0a6ff110c6d83bdaa",
-                "reference": "ec158c749ed4c2f7466c93d0a6ff110c6d83bdaa",
+                "url": "https://api.github.com/repos/yale-web-technologies/IIIF-Manifest-Generator/zipball/8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c",
+                "reference": "8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2335,9 +2301,10 @@
             ],
             "description": "This is a IIIF Manifest Generator written in PHP. It implements the IIIF API Specification. Currently this only supports the Presentation API.",
             "support": {
-                "source": "https://github.com/BGSU-LITS/IIIF-Manifest-Generator/tree/fix-types"
+                "source": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator/tree/master",
+                "issues": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator/issues"
             },
-            "time": "2021-02-19T16:00:58+00:00"
+            "time": "2021-02-23T13:59:22+00:00"
         }
     ],
     "packages-dev": [
@@ -2636,16 +2603,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.0.4",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "e4782611070e50613683d2b9a57730e9a3ba5451"
+                "reference": "bae7c545bef187884426f042434e561ab1ddb182"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/e4782611070e50613683d2b9a57730e9a3ba5451",
-                "reference": "e4782611070e50613683d2b9a57730e9a3ba5451",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/bae7c545bef187884426f042434e561ab1ddb182",
+                "reference": "bae7c545bef187884426f042434e561ab1ddb182",
                 "shasum": ""
             },
             "require": {
@@ -2681,9 +2648,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.0.4"
+                "source": "https://github.com/phar-io/version/tree/3.1.0"
             },
-            "time": "2020-12-13T23:18:30+00:00"
+            "time": "2021-02-23T14:00:09+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
