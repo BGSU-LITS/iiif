@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47f6104e5bb6e546546a59afd9765e65",
+    "content-hash": "3a218017624a9019d826d1b02b26c29c",
     "packages": [
         {
             "name": "bgsu-lits/framework",
@@ -53,42 +53,7 @@
                     "/src/Lits/Test/"
                 ]
             },
-            "scripts": {
-                "post-install-cmd": [
-                    "@composer bin all install --ansi"
-                ],
-                "post-update-cmd": [
-                    "@composer bin all update --ansi"
-                ],
-                "phpcbf": [
-                    "phpcbf ./ --standard=phpcs.xml"
-                ],
-                "phpcs": [
-                    "phpcs ./ --standard=phpcs.xml"
-                ],
-                "phplint": [
-                    "phplint ./ --exclude=vendor"
-                ],
-                "phpstan": [
-                    "phpstan analyse -c phpstan.neon"
-                ],
-                "phpunit": [
-                    "phpunit -c phpunit.xml"
-                ],
-                "psalm": [
-                    "psalm -c psalm.xml"
-                ],
-                "test": [
-                    "@phplint",
-                    "@phpcs",
-                    "@phpstan",
-                    "@psalm",
-                    "@phpunit"
-                ],
-                "twigcs": [
-                    "twigcs ./template"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2307,18 +2272,19 @@
         },
         {
             "name": "yale-web-technologies/iiif-manifest-generator",
-            "version": "dev-fix-types",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/BGSU-LITS/IIIF-Manifest-Generator.git",
-                "reference": "61c52970eb08d8fb80423f4fb8c5383669254c40"
+                "url": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator.git",
+                "reference": "8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BGSU-LITS/IIIF-Manifest-Generator/zipball/61c52970eb08d8fb80423f4fb8c5383669254c40",
-                "reference": "61c52970eb08d8fb80423f4fb8c5383669254c40",
+                "url": "https://api.github.com/repos/yale-web-technologies/IIIF-Manifest-Generator/zipball/8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c",
+                "reference": "8878521fc7cc32f45bfb39f3bc0a07dc0fc73e5c",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2330,9 +2296,10 @@
             ],
             "description": "This is a IIIF Manifest Generator written in PHP. It implements the IIIF API Specification. Currently this only supports the Presentation API.",
             "support": {
-                "source": "https://github.com/BGSU-LITS/IIIF-Manifest-Generator/tree/fix-types"
+                "source": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator/tree/master",
+                "issues": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator/issues"
             },
-            "time": "2021-02-22T13:25:14+00:00"
+            "time": "2021-02-23T13:59:22+00:00"
         }
     ],
     "packages-dev": [
