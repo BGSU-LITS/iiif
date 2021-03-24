@@ -147,16 +147,37 @@ final class PageData extends Data
             $uri .= '&k=' . $this->settings['presentation']->key;
         }
 
-        $ext = \is_string($this->settings['presentation']->ext)
-            ? $this->settings['presentation']->ext
-            : $this->extension();
+        if (\is_string($this->settings['presentation']->size)) {
+            $uri .= '&size=' . $this->settings['presentation']->size;
+        }
+
+        $pathinfo = \pathinfo($this->path);
+
+        $ext = '';
+
+        if (isset($pathinfo['extension'])) {
+            $ext = $pathinfo['extension'];
+        }
+
+        $file = '';
+
+        if (isset($pathinfo['basename'])) {
+            $file = $pathinfo['basename'];
+        }
+
+        if (\is_string($this->settings['presentation']->ext)) {
+            if ($ext !== $this->settings['presentation']->ext) {
+                $ext = $this->settings['presentation']->ext;
+                $file .= '.' . $ext;
+            }
+        }
 
         if ($ext !== '') {
             $uri .= '&ext=' . $ext;
         }
 
-        if (\is_string($this->settings['presentation']->size)) {
-            $uri .= '&size=' . $this->settings['presentation']->size;
+        if ($file !== '') {
+            $uri .= '&file=' . $file;
         }
 
         return $uri . '/info.json';
