@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "diva.js": "^6.0.2",
-    "mirador": "^3.0.0",
+    "mirador": "^3.1.1",
     "tify": "^0.24.2",
     "universalviewer": "^3.0.22"
   }
