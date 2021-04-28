@@ -24,7 +24,8 @@ use function Safe\usort;
 
 final class PresentationData extends Data
 {
-    public string $index;
+    public string $title;
+    public string $collection;
 
     /** @var array<string, string> */
     public array $metadata = [];
@@ -35,9 +36,13 @@ final class PresentationData extends Data
     public string $viewingDirection = 'left-to-right';
     public string $viewingHint = 'paged';
 
-    public function __construct(string $index, Settings $settings)
-    {
-        $this->index = $index;
+    public function __construct(
+        string $title,
+        string $collection,
+        Settings $settings
+    ) {
+        $this->title = $title;
+        $this->collection = $collection;
 
         parent::__construct($settings);
     }
@@ -83,11 +88,13 @@ final class PresentationData extends Data
             self::separator($this->slug());
 
         if (!\file_exists($path)) {
-            mkdir($path);
+            mkdir($path, 0777, true);
         }
 
         $generator = new Generator();
         $manifest = $this->manifest();
+
+        echo 'Saving ' . $path . 'manifest' . \PHP_EOL;
 
         file_put_contents(
             $path . 'manifest',
@@ -106,23 +113,34 @@ final class PresentationData extends Data
         /** @var Canvas $canvas */
         foreach ($sequence->getCanvases() as $canvas) {
             $canvas->addContext($canvas->getDefaultContext());
+            $base = \basename($canvas->getID());
+
+            echo 'Saving ' . $path . $base . \PHP_EOL;
 
             file_put_contents(
-                $path . \basename($canvas->getID()),
+                $path . $base,
                 $generator->generate($canvas)
             );
         }
     }
 
-    public function slug(): string
+    public function slug(string $separator = \DIRECTORY_SEPARATOR): string
     {
-        if ($this->index === '') {
+        if ($this->title === '') {
             return '';
         }
 
         $slugify = new Slugify();
+        $collection = '';
 
-        return $slugify->slugify($this->index);
+        if ($this->collection !== '') {
+            $collection = self::separator(
+                $slugify->slugify($this->collection),
+                $separator
+            );
+        }
+
+        return $collection . $slugify->slugify($this->title);
     }
 
     private function manifest(): Manifest
@@ -138,7 +156,7 @@ final class PresentationData extends Data
         $manifest = new Manifest(true);
         $manifest->setID(
             self::separator($this->settings['presentation']->url, '/') .
-            $this->slug() . '/manifest'
+            $this->slug('/') . '/manifest'
         );
 
         $manifest->addLabel(
@@ -193,7 +211,7 @@ final class PresentationData extends Data
         $sequence = new Sequence();
 
         foreach ($this->pages as $count => $page) {
-            $sequence->addCanvas($page->canvas($count, $this->slug()));
+            $sequence->addCanvas($page->canvas($count, $this->slug('/')));
         }
 
         return $sequence;

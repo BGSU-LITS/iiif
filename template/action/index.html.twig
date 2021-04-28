@@ -6,42 +6,44 @@
 <thead>
 <tr>
 <th>Title</th>
+<th>Collection</th>
 <th colspan="2">Files</th>
-<th colspan="3">Viewers</th>
+<th colspan="4">Viewers</th>
 </tr>
 </thead>
 <tbody>
-{% for index, label in manifests %}
+{% for manifest in manifests %}
 <tr>
-<td><a href="{{ url_for('index', {'index': index}) }}">{{ label }}</a></td>
-<td><a href="{{ url_for('manifest', {'index': index}) }}" title="Manifest for {{ label }}">Manifest</a></td>
-<td><a href="{{ url_for('canvas', {'index': index}) }}" title="Canvases for {{ label }}">Canvases</a></td>
-<td><a href="{{ url_for('diva', {'index': index}) }}" title="View {{ label }} in Diva">Diva</a></td>
-<td><a href="{{ url_for('mirador', {'index': index}) }}" title="View {{ label }} in Mirador">Mirador</a></td>
-<td><a href="{{ url_for('tify', {'index': index}) }}" title="View {{ label }} in Tify">Tify</a></td>
-<td><a href="{{ url_for('uv', {'index': index}) }}" title="View {{ label }} in Universal Viewer">Universal Viewer</a></td>
+<td><a href="{{ url_for('index', {'index': manifest.index}) }}">{{ manifest.title }}</a></td>
+<td>{{ manifest.collection }}</td>
+<td><a href="{{ url_for('manifest', {'index': manifest.index}) }}" title="Manifest for {{ manifest.title }}">Manifest</a></td>
+<td><a href="{{ url_for('canvas', {'index': manifest.index}) }}" title="Canvases for {{ manifest.title }}">Canvases</a></td>
+<td><a href="{{ url_for('diva', {'index': manifest.index}) }}" title="View {{ manifest.title }} in Diva">Diva</a></td>
+<td><a href="{{ url_for('mirador', {'index': manifest.index}) }}" title="View {{ manifest.title }} in Mirador">Mirador</a></td>
+<td><a href="{{ url_for('tify', {'index': manifest.index}) }}" title="View {{ manifest.title }} in Tify">Tify</a></td>
+<td><a href="{{ url_for('uv', {'index': manifest.index}) }}" title="View {{ manifest.title }} in Universal Viewer">Universal Viewer</a></td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-{% elseif index %}
+{% elseif manifest %}
 {{ parent() }}
 <nav aria-label="breadcrumb">
 <ol class="list-breadcrumb">
-<li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li><li aria-current="page">{{ title }}</li>
+<li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li>{% if manifest.collection %}<li>{{ manifest.collection }}</li>{% endif %}<li aria-current="page">{{ manifest.title }}</li>
 </ol>
 </nav>
 <h2>Files</h2>
 <ul>
-<li><a href="{{ url_for('manifest', {'index': index}) }}">Manifest</a></li>
-<li><a href="{{ url_for('canvas', {'index': index}) }}">Canvases</a></li>
+<li><a href="{{ url_for('manifest', {'index': manifest.index}) }}">Manifest</a></li>
+<li><a href="{{ url_for('canvas', {'index': manifest.index}) }}">Canvases</a></li>
 </ul>
 <h2>Viewers</h2>
 <ul>
-<li><a href="{{ url_for('diva', {'index': index}) }}">Diva</a></li>
-<li><a href="{{ url_for('mirador', {'index': index}) }}">Mirador</a></li>
-<li><a href="{{ url_for('tify', {'index': index}) }}">Tify</a></li>
-<li><a href="{{ url_for('uv', {'index': index}) }}">Universal Viewer</a></li>
+<li><a href="{{ url_for('diva', {'index': manifest.index}) }}">Diva</a></li>
+<li><a href="{{ url_for('mirador', {'index': manifest.index}) }}">Mirador</a></li>
+<li><a href="{{ url_for('tify', {'index': manifest.index}) }}">Tify</a></li>
+<li><a href="{{ url_for('uv', {'index': manifest.index}) }}">Universal Viewer</a></li>
 </ul>
 {% else %}
 <div class="alert alert-failure">

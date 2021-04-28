@@ -22,13 +22,11 @@ final class IndexAction extends Action
 
         try {
             if (isset($this->data['index'])) {
-                $json = $file->json($this->data['index'], 'manifest');
-
-                $context['index'] = $this->data['index'];
-                $context['title'] =
-                    (string) ($json['label'] ?? $context['index']);
+                $context['manifest'] = $file->manifest($this->data['index']);
+                $context['title'] = $context['manifest']->title;
             } else {
                 $context['manifests'] = $file->list('*', 'manifest');
+                $context['manifests'] += $file->list('*', '*', 'manifest');
             }
         } catch (DirException | FilesystemException $exception) {
             throw new HttpNotFoundException(

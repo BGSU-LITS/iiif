@@ -51,15 +51,23 @@ return function (Framework $framework): void {
     // If there is no header, use null.
     // $settings['csv']->header = 0;
 
-    // Which column of the CSV file contains an index used to sort pages.
-    // Each page within a document must have the same value in this field, but
-    // a different value than other documents. This value will also be used
-    // for naming the presentation created for each document.
-    // $settings['csv']->index = 'Title';
-
     // Which column of the CSV file contains a unique ID for each page which
     // can be sent to the IIIF Image API server to retrieve that page image.
     // $settings['csv']->id = 'Asset ID(s)';
+
+    // Which column of the CSV file contains a title used to sort pages.
+    // Each page within a document must have the same value in this field, but
+    // a different value than other documents. This value will also be used
+    // for naming the presentation created for each document.
+    // $settings['csv']->title = 'Title';
+
+    // Which column of the CSV file contains a collection name used to sort
+    // presentations.
+    // $settings['csv']->collection = 'Is Part Of';
+
+    // Which column of the CSV file contains the page labels to use instead of
+    // sequential integers starting at one.
+    // $settings['csv']->label = 'Caption';
 
     // Which column of the CSV file contains the path to the image in host
     // system including the filename with extension.

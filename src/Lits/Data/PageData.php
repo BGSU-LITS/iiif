@@ -56,6 +56,9 @@ final class PageData extends Data
             $count
         );
 
+        echo 'Fetching ' . $this->index;
+        echo ($this->label === '' ? '' : ' (' . $this->label . ')') . \PHP_EOL;
+
         $annotation = $this->annotation();
         $annotation->setOn($canvas->getID());
         $canvas->addImage($annotation);

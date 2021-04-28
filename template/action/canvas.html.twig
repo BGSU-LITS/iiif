@@ -5,13 +5,13 @@
 {{ parent() }}
 <nav aria-label="breadcrumb">
 <ol class="list-breadcrumb">
-<li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li><li><a href="{{ url_for('index', {'index': index}) }}">{{ label }}</a></li><li aria-current="page">{{ title }}</li>
+<li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li>{% if manifest.collection %}<li>{{ manifest.collection }}</li>{% endif %}<li><a href="{{ url_for('index', {'index': manifest.index}) }}">{{ manifest.title }}</a></li><li aria-current="page">{{ title }}</li>
 </ol>
 </nav>
 <h2>Files</h2>
-<ul>
-{% for canvas, label in canvases %}
-<li><a href="{{ url_for('canvas', {'index': index, 'canvas': canvas}) }}">{{ label }}</a></li>
+<ul class="list-inline text-center">
+{% for canvas in canvases %}
+<li><a href="{{ url_for('canvas', {'index': manifest.index, 'canvas': canvas.index}) }}">{{ canvas.title }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

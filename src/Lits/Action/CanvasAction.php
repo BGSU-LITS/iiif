@@ -47,17 +47,14 @@ final class CanvasAction extends Action
         }
 
         try {
-            $json = $file->json($this->data['index'], 'manifest');
-
-            $context = [];
-            $context['index'] = $this->data['index'];
-            $context['label'] = (string) ($json['label'] ?? $context['index']);
-
-            $context['canvases'] = $file->list(
-                $this->data['index'],
-                'canvas',
-                '*'
-            );
+            $context = [
+                'manifest' => $file->manifest($this->data['index']),
+                'canvases' => $file->list(
+                    $this->data['index'],
+                    'canvas',
+                    '*'
+                ),
+            ];
         } catch (DirException | FilesystemException $exception) {
             throw new HttpNotFoundException(
                 $this->request,

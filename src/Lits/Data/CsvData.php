@@ -26,16 +26,29 @@ final class CsvData extends Data
         /** @var array<string, string> $row */
         foreach ($csv as $row) {
             $current = null;
-            $index = \trim($row[$this->settings['csv']->index]);
+
+            $title = \trim($row[$this->settings['csv']->title]);
+            $collection = \trim($row[$this->settings['csv']->collection]);
 
             foreach ($this->presentations as $presentation) {
-                if ($presentation->index === $index) {
+                if (
+                    $presentation->title === $title &&
+                    $presentation->collection === $collection
+                ) {
                     $current = $presentation;
                 }
             }
 
+            $name = ($collection === '' ? '' : $collection . ': ') . $title;
+
             if (\is_null($current)) {
-                $current = new PresentationData($index, $this->settings);
+                echo 'Creating ' . $name . \PHP_EOL;
+
+                $current = new PresentationData(
+                    $title,
+                    $collection,
+                    $this->settings
+                );
 
                 foreach (
                     $this->settings['csv']->metadata as $field => $element
@@ -45,6 +58,14 @@ final class CsvData extends Data
 
                 $this->presentations[] = $current;
             }
+
+            $page = $row[$this->settings['csv']->sort];
+
+            if ($row[$this->settings['csv']->label] !== '') {
+                $page .= ' (' . $row[$this->settings['csv']->label] . ')';
+            }
+
+            echo 'Adding ' . $page . ' to ' . $name . \PHP_EOL;
 
             $current->addPage(
                 $row[$this->settings['csv']->sort],

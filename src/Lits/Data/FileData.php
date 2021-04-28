@@ -22,7 +22,7 @@ final class FileData extends Data
         return json_decode($this->read(...$path), true);
     }
 
-    /** @return array<string, string> */
+    /** @return array<string, ManifestData> */
     public function list(string ...$path): array
     {
         $this->chdir();
@@ -34,17 +34,31 @@ final class FileData extends Data
             $index = \basename($file);
 
             if ($index === 'manifest') {
-                $index = \basename(\dirname($file));
+                $index = \dirname($file);
             }
 
-            $json = $this->json($file);
-            $list[$index] = (string) ($json['label'] ?? $index);
+            $list[$index] = new ManifestData(
+                $index,
+                $this->json($file),
+                $this->settings
+            );
         }
 
         ksort($list);
 
-        /** @var array<string, string> */
         return $list;
+    }
+
+    public function manifest(string $index): ManifestData
+    {
+        $path = \explode('/', $index);
+        $path[] = 'manifest';
+
+        return new ManifestData(
+            $index,
+            $this->json(...$path),
+            $this->settings
+        );
     }
 
     public function read(string ...$path): string

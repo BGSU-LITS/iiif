@@ -11,7 +11,8 @@ final class CsvConfig extends Config
     public ?int $header = 0;
 
     public string $id = 'Asset ID(s)';
-    public string $index = 'Title';
+    public string $title = 'Title';
+    public string $collection = 'Is Part Of';
     public string $label = 'Caption';
     public string $path = 'ZDam Path';
     public string $sort = 'Original filename';
