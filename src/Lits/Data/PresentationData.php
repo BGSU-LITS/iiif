@@ -13,6 +13,7 @@ use IIIF\PresentationAPI\Resources\Annotation;
 use IIIF\PresentationAPI\Resources\Canvas;
 use IIIF\PresentationAPI\Resources\Manifest;
 use IIIF\PresentationAPI\Resources\Sequence;
+use Lits\Command;
 use Lits\Config\PresentationConfig;
 use Lits\Data;
 use Lits\Exception\InvalidConfigException;
@@ -94,7 +95,7 @@ final class PresentationData extends Data
         $generator = new Generator();
         $manifest = $this->manifest();
 
-        echo 'Saving ' . $path . 'manifest' . \PHP_EOL;
+        Command::output('Saving ' . $path . 'manifest' . \PHP_EOL);
 
         file_put_contents(
             $path . 'manifest',
@@ -115,7 +116,7 @@ final class PresentationData extends Data
             $canvas->addContext($canvas->getDefaultContext());
             $base = \basename($canvas->getID());
 
-            echo 'Saving ' . $path . $base . \PHP_EOL;
+            Command::output('Saving ' . $path . $base . \PHP_EOL);
 
             file_put_contents(
                 $path . $base,

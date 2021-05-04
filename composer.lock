@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a218017624a9019d826d1b02b26c29c",
+    "content-hash": "ac4635c53c2d2f3d1242cd7dcb7b2287",
     "packages": [
         {
             "name": "bgsu-lits/framework",
-            "version": "v1.2.3",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BGSU-LITS/framework.git",
-                "reference": "a037df54b65ae4e103e2ff63ceff7d84d8b46137"
+                "reference": "1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BGSU-LITS/framework/zipball/a037df54b65ae4e103e2ff63ceff7d84d8b46137",
-                "reference": "a037df54b65ae4e103e2ff63ceff7d84d8b46137",
+                "url": "https://api.github.com/repos/BGSU-LITS/framework/zipball/1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f",
+                "reference": "1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f",
                 "shasum": ""
             },
             "require": {
@@ -91,9 +91,9 @@
             "description": "Framework for applications based on Slim.",
             "support": {
                 "issues": "https://github.com/BGSU-LITS/framework/issues",
-                "source": "https://github.com/BGSU-LITS/framework/tree/v1.2.3"
+                "source": "https://github.com/BGSU-LITS/framework/tree/v1.3.0"
             },
-            "time": "2021-05-03T14:45:52+00:00"
+            "time": "2021-05-03T20:39:30+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -2506,17 +2506,71 @@
             "time": "2020-11-13T09:40:50+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v4.10.4",
+            "name": "neronmoon/scriptsdev",
+            "version": "v0.1.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e"
+                "url": "https://github.com/neronmoon/scriptsdev.git",
+                "reference": "e812b334bc662cccc4a965c245812b59ae2157cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c6d052fc58cb876152f89f532b95a8d7907e7f0e",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e",
+                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/e812b334bc662cccc4a965c245812b59ae2157cb",
+                "reference": "e812b334bc662cccc4a965c245812b59ae2157cb",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0@dev || ~2.0@dev"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ScriptsDev\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ScriptsDev\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy Krasnoperov",
+                    "email": "alistar.neron@gmail.com"
+                }
+            ],
+            "description": "Scripts-dev behaviour for Composer",
+            "homepage": "https://github.com/neronmoon/scriptsdev",
+            "keywords": [
+                "commands",
+                "commands execution",
+                "composer",
+                "dev",
+                "scripts"
+            ],
+            "support": {
+                "issues": "https://github.com/neronmoon/scriptsdev/issues",
+                "source": "https://github.com/neronmoon/scriptsdev/tree/v0.1.9"
+            },
+            "time": "2020-12-16T08:02:02+00:00"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "v4.10.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4432ba399e47c66624bc73c8c0f811e5c109576f",
+                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f",
                 "shasum": ""
             },
             "require": {
@@ -2557,9 +2611,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.5"
             },
-            "time": "2020-12-20T10:01:03+00:00"
+            "time": "2021-05-03T19:11:20+00:00"
         },
         {
             "name": "phar-io/manifest",

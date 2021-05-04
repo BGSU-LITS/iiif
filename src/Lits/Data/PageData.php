@@ -8,6 +8,7 @@ use IIIF\PresentationAPI\Links\Service;
 use IIIF\PresentationAPI\Resources\Annotation;
 use IIIF\PresentationAPI\Resources\Canvas;
 use IIIF\PresentationAPI\Resources\Content;
+use Lits\Command;
 use Lits\Config\PresentationConfig;
 use Lits\Data;
 use Lits\Exception\InvalidConfigException;
@@ -56,8 +57,10 @@ final class PageData extends Data
             $count
         );
 
-        echo 'Fetching ' . $this->index;
-        echo ($this->label === '' ? '' : ' (' . $this->label . ')') . \PHP_EOL;
+        Command::output(
+            'Fetching ' . $this->index .
+            ($this->label === '' ? '' : ' (' . $this->label . ')') . \PHP_EOL
+        );
 
         $annotation = $this->annotation();
         $annotation->setOn($canvas->getID());

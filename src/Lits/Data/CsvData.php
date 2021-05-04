@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lits\Data;
 
 use League\Csv\Reader;
+use Lits\Command;
 use Lits\Config\CsvConfig;
 use Lits\Data;
 
@@ -42,7 +43,7 @@ final class CsvData extends Data
             $name = ($collection === '' ? '' : $collection . ': ') . $title;
 
             if (\is_null($current)) {
-                echo 'Creating ' . $name . \PHP_EOL;
+                Command::output('Creating ' . $name . \PHP_EOL);
 
                 $current = new PresentationData(
                     $title,
@@ -65,7 +66,7 @@ final class CsvData extends Data
                 $page .= ' (' . $row[$this->settings['csv']->label] . ')';
             }
 
-            echo 'Adding ' . $page . ' to ' . $name . \PHP_EOL;
+            Command::output('Adding ' . $page . ' to ' . $name . \PHP_EOL);
 
             $current->addPage(
                 $row[$this->settings['csv']->sort],
