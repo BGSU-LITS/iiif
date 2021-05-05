@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac4635c53c2d2f3d1242cd7dcb7b2287",
+    "content-hash": "3ccee26f13822fdca6ce307524663649",
     "packages": [
         {
             "name": "bgsu-lits/framework",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BGSU-LITS/framework.git",
-                "reference": "1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f"
+                "reference": "c6f6b31d1931131891839185489ffa43b248289e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BGSU-LITS/framework/zipball/1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f",
-                "reference": "1e0f0bd05a0eaaea5d0db45ca403fd337c9f600f",
+                "url": "https://api.github.com/repos/BGSU-LITS/framework/zipball/c6f6b31d1931131891839185489ffa43b248289e",
+                "reference": "c6f6b31d1931131891839185489ffa43b248289e",
                 "shasum": ""
             },
             "require": {
@@ -91,9 +91,9 @@
             "description": "Framework for applications based on Slim.",
             "support": {
                 "issues": "https://github.com/BGSU-LITS/framework/issues",
-                "source": "https://github.com/BGSU-LITS/framework/tree/v1.3.0"
+                "source": "https://github.com/BGSU-LITS/framework/tree/v1.4.0"
             },
-            "time": "2021-05-03T20:39:30+00:00"
+            "time": "2021-05-05T20:15:06+00:00"
         },
         {
             "name": "cocur/slugify",
