@@ -18,16 +18,13 @@ use Lits\Config\PresentationConfig;
 use Lits\Data;
 use Lits\Exception\InvalidConfigException;
 use Lits\Settings;
+use Safe\Exceptions\FilesystemException;
 
 use function Safe\file_put_contents;
 use function Safe\mkdir;
-use function Safe\usort;
 
 final class PresentationData extends Data
 {
-    public string $title;
-    public string $collection;
-
     /** @var array<string, string> */
     public array $metadata = [];
 
@@ -38,13 +35,10 @@ final class PresentationData extends Data
     public string $viewingHint = 'paged';
 
     public function __construct(
-        string $title,
-        string $collection,
-        Settings $settings
+        public string $title,
+        public string $collection,
+        Settings $settings,
     ) {
-        $this->title = $title;
-        $this->collection = $collection;
-
         parent::__construct($settings);
     }
 
@@ -52,14 +46,14 @@ final class PresentationData extends Data
         string $index,
         string $id,
         string $label,
-        string $path
+        string $path,
     ): void {
         $this->pages[] = new PageData(
             \trim($index),
             \trim($id),
             \trim($label),
             \trim($path),
-            $this->settings
+            $this->settings,
         );
     }
 
@@ -72,6 +66,10 @@ final class PresentationData extends Data
         }
     }
 
+    /**
+     * @throws FilesystemException
+     * @throws InvalidConfigException
+     */
     public function save(): void
     {
         \assert($this->settings['presentation'] instanceof PresentationConfig);
@@ -99,7 +97,7 @@ final class PresentationData extends Data
 
         file_put_contents(
             $path . 'manifest',
-            $generator->generate($manifest)
+            $generator->generate($manifest),
         );
 
         $path .= self::separator('canvas');
@@ -108,21 +106,7 @@ final class PresentationData extends Data
             mkdir($path);
         }
 
-        /** @var Sequence */
-        $sequence = $manifest->getSequences()[0];
-
-        /** @var Canvas $canvas */
-        foreach ($sequence->getCanvases() as $canvas) {
-            $canvas->addContext($canvas->getDefaultContext());
-            $base = \basename($canvas->getID());
-
-            Command::output('Saving ' . $path . $base . \PHP_EOL);
-
-            file_put_contents(
-                $path . $base,
-                $generator->generate($canvas)
-            );
-        }
+        $this->saveSequences($manifest, $path);
     }
 
     public function slug(string $separator = \DIRECTORY_SEPARATOR): string
@@ -137,13 +121,14 @@ final class PresentationData extends Data
         if ($this->collection !== '') {
             $collection = self::separator(
                 $slugify->slugify($this->collection),
-                $separator
+                $separator,
             );
         }
 
         return $collection . $slugify->slugify($this->title);
     }
 
+    /** @throws InvalidConfigException */
     private function manifest(): Manifest
     {
         \assert($this->settings['presentation'] instanceof PresentationConfig);
@@ -157,15 +142,15 @@ final class PresentationData extends Data
         $manifest = new Manifest(true);
         $manifest->setID(
             self::separator($this->settings['presentation']->url, '/') .
-            $this->slug('/') . '/manifest'
+            $this->slug('/') . '/manifest',
         );
 
         $manifest->addLabel(
-            $this->metadata[$this->settings['presentation']->label]
+            $this->metadata[$this->settings['presentation']->label],
         );
 
         $manifest->addDescription(
-            $this->metadata[$this->settings['presentation']->description]
+            $this->metadata[$this->settings['presentation']->description],
         );
 
         if ($this->metadata[$this->settings['presentation']->rights] !== '') {
@@ -200,13 +185,33 @@ final class PresentationData extends Data
         return $metadata;
     }
 
+    private function saveSequences(Manifest $manifest, string $path): void
+    {
+        $generator = new Generator();
+        $sequences = $manifest->getSequences();
+        \assert(isset($sequences[0]) && $sequences[0] instanceof Sequence);
+
+        foreach ($sequences[0]->getCanvases() as $canvas) {
+            \assert($canvas instanceof Canvas);
+            $canvas->addContext($canvas->getDefaultContext());
+            $base = \basename($canvas->getID());
+
+            Command::output('Saving ' . $path . $base . \PHP_EOL);
+
+            file_put_contents(
+                $path . $base,
+                $generator->generate($canvas),
+            );
+        }
+    }
+
     private function sequence(): Sequence
     {
         $pages = $this->pages;
 
-        usort(
+        \usort(
             $pages,
-            fn (PageData $a, PageData $b) => $a->index <=> $b->index
+            fn (PageData $a, PageData $b) => $a->index <=> $b->index,
         );
 
         $sequence = new Sequence();
@@ -222,21 +227,21 @@ final class PresentationData extends Data
     {
         $thumbnail = new Thumbnail();
 
-        /** @var list<Canvas> */
         $canvases = $sequence->getCanvases();
+        \assert(isset($canvases[0]) && $canvases[0] instanceof Canvas);
 
-        /** @var Annotation */
-        $image = $canvases[0]->getImages()[0];
+        $images = $canvases[0]->getImages();
+        \assert(isset($images[0]) && $images[0] instanceof Annotation);
 
-        /** @var Service */
-        $service = $image->getContent()->getServices()[0];
+        $services = $images[0]->getContent()->getServices();
+        \assert(isset($services[0]) && $services[0] instanceof Service);
 
         $thumbnail->setID(
-            $service->getID() .
-            '/full/120,/90/default.jpg'
+            $services[0]->getID() .
+            '/full/120,/90/default.jpg',
         );
 
-        $thumbnail->setService($service);
+        $thumbnail->setService($services[0]);
 
         return $thumbnail;
     }

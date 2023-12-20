@@ -13,6 +13,10 @@ use Slim\Exception\HttpNotFoundException;
 
 final class ManifestAction extends Action
 {
+    /**
+     * @throws HttpInternalServerErrorException
+     * @throws HttpNotFoundException
+     */
     public function action(): void
     {
         if (!isset($this->data['index'])) {
@@ -23,17 +27,23 @@ final class ManifestAction extends Action
 
         try {
             $this->response->getBody()->write(
-                $file->read($this->data['index'], 'manifest')
+                $file->read($this->data['index'], 'manifest'),
             );
+
+            $this->cors();
+            $this->json();
         } catch (DirException | FilesystemException $exception) {
             throw new HttpNotFoundException(
                 $this->request,
                 null,
-                $exception
+                $exception,
+            );
+        } catch (\Throwable $exception) {
+            throw new HttpInternalServerErrorException(
+                $this->request,
+                null,
+                $exception,
             );
         }
-
-        $this->cors();
-        $this->json();
     }
 }

@@ -9,26 +9,40 @@ use Lits\Settings;
 
 final class ManifestData extends Data
 {
-    public string $index;
     public string $title;
     public ?string $collection = null;
 
-    /** @param array<string, mixed> $json */
-    public function __construct(string $index, array $json, Settings $settings)
-    {
-        $this->index = $index;
+    /** @param array<array-key, mixed> $json */
+    public function __construct(
+        public string $index,
+        array $json,
+        Settings $settings,
+    ) {
+        parent::__construct($settings);
+
         $this->title = (string) ($json['label'] ?? $index);
 
-        if (\is_array($json['metadata'])) {
-            foreach ($json['metadata'] as $metadata) {
-                if ($metadata['label'] === 'Is Part Of') {
-                    $this->collection = $metadata['value'];
-
-                    break;
-                }
-            }
+        if (!isset($json['metadata']) || !\is_array($json['metadata'])) {
+            return;
         }
 
-        parent::__construct($settings);
+        $this->collection($json['metadata']);
+    }
+
+    /** @param array<mixed> $metadata */
+    private function collection(array $metadata): void
+    {
+        /** @psalm-var mixed $data */
+        foreach ($metadata as $data) {
+            if (
+                isset($data['label']) &&
+                isset($data['value']) &&
+                $data['label'] !== 'Is Part Of'
+            ) {
+                $this->collection = (string) $data['value'];
+
+                break;
+            }
+        }
     }
 }

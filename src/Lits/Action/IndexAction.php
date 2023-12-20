@@ -6,15 +6,17 @@ namespace Lits\Action;
 
 use Lits\Action;
 use Lits\Data\FileData;
-use Safe\Exceptions\ArrayException;
 use Safe\Exceptions\DirException;
 use Safe\Exceptions\FilesystemException;
-use Safe\Exceptions\JsonException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
 final class IndexAction extends Action
 {
+    /**
+     * @throws HttpInternalServerErrorException
+     * @throws HttpNotFoundException
+     */
     public function action(): void
     {
         $context = [];
@@ -28,20 +30,20 @@ final class IndexAction extends Action
                 $context['manifests'] = $file->list('*', 'manifest');
                 $context['manifests'] += $file->list('*', '*', 'manifest');
             }
+
+            $this->render($this->template(), $context);
         } catch (DirException | FilesystemException $exception) {
             throw new HttpNotFoundException(
                 $this->request,
                 null,
-                $exception
+                $exception,
             );
-        } catch (ArrayException | JsonException $exception) {
+        } catch (\Throwable $exception) {
             throw new HttpInternalServerErrorException(
                 $this->request,
                 null,
-                $exception
+                $exception,
             );
         }
-
-        $this->render($this->template(), $context);
     }
 }

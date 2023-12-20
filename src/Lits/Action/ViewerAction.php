@@ -6,14 +6,18 @@ namespace Lits\Action;
 
 use Lits\Action;
 use Lits\Data\FileData;
+use Lits\Exception\InvalidDataException;
 use Safe\Exceptions\DirException;
 use Safe\Exceptions\FilesystemException;
-use Safe\Exceptions\JsonException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
 abstract class ViewerAction extends Action
 {
+    /**
+     * @throws HttpInternalServerErrorException
+     * @throws HttpNotFoundException
+     */
     public function action(): void
     {
         if (!isset($this->data['index'])) {
@@ -24,27 +28,29 @@ abstract class ViewerAction extends Action
 
         try {
             $json = $file->json($this->data['index'], 'manifest');
+
+            if (!isset($json['label']) || !isset($json['@id'])) {
+                throw new InvalidDataException(
+                    'Manifest did not include required data.',
+                );
+            }
+
+            $this->render($this->template(), [
+                'title' => $json['label'],
+                'id' => $json['@id'],
+            ]);
         } catch (DirException | FilesystemException $exception) {
             throw new HttpNotFoundException(
                 $this->request,
                 null,
-                $exception
+                $exception,
             );
-        } catch (JsonException $exception) {
+        } catch (\Throwable $exception) {
             throw new HttpInternalServerErrorException(
                 $this->request,
                 null,
-                $exception
+                $exception,
             );
         }
-
-        if (!isset($json['label']) || !isset($json['@id'])) {
-            throw new HttpInternalServerErrorException($this->request);
-        }
-
-        $this->render($this->template(), [
-            'title' => $json['label'],
-            'id' => $json['@id'],
-        ]);
     }
 }

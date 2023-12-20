@@ -7,35 +7,37 @@ namespace Lits\Command;
 use GetOpt\GetOpt;
 use GetOpt\Operand;
 use GetOpt\Option;
+use League\Csv\Exception as CsvException;
 use Lits\Command;
 use Lits\Config\PresentationConfig;
 use Lits\Data\CsvData;
 
 final class ProcessCommand extends Command
 {
+    /** @throws CsvException */
     public function command(): void
     {
         $this->getopt->addOperand(
             Operand::create('file', Operand::REQUIRED)
-                ->setDescription('CSV file to process.')
+                ->setDescription('CSV file to process.'),
         );
 
         $this->getopt->addOption(
             Option::create('k', 'key', GetOpt::REQUIRED_ARGUMENT)
                 ->setArgumentName('key')
-                ->setDescription('10-digit hexadecimal access key.')
+                ->setDescription('10-digit hexadecimal access key.'),
         );
 
         $this->getopt->addOption(
             Option::create('e', 'ext', GetOpt::REQUIRED_ARGUMENT)
                 ->setArgumentName('extension')
-                ->setDescription('File extension without any leading dot.')
+                ->setDescription('File extension without any leading dot.'),
         );
 
         $this->getopt->addOption(
             Option::create('s', 'size', GetOpt::REQUIRED_ARGUMENT)
                 ->setArgumentName('size')
-                ->setDescription('Size codeword.')
+                ->setDescription('Size codeword.'),
         );
 
         if (!$this->process()) {

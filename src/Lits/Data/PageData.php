@@ -13,32 +13,29 @@ use Lits\Config\PresentationConfig;
 use Lits\Data;
 use Lits\Exception\InvalidConfigException;
 use Lits\Settings;
+use Safe\Exceptions\FilesystemException;
+use Safe\Exceptions\JsonException;
 
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 
 final class PageData extends Data
 {
-    public string $index;
-    public string $id;
-    public string $label;
-    public string $path;
-
     public function __construct(
-        string $index,
-        string $id,
-        string $label,
-        string $path,
-        Settings $settings
+        public string $index,
+        public string $id,
+        public string $label,
+        public string $path,
+        Settings $settings,
     ) {
-        $this->index = $index;
-        $this->id = $id;
-        $this->label = $label;
-        $this->path = $path;
-
         parent::__construct($settings);
     }
 
+    /**
+     * @throws FilesystemException
+     * @throws InvalidConfigException
+     * @throws JsonException
+     */
     public function canvas(int $count, string $slug): Canvas
     {
         \assert($this->settings['presentation'] instanceof PresentationConfig);
@@ -54,12 +51,12 @@ final class PageData extends Data
             self::separator($this->settings['presentation']->url, '/') .
             self::separator($slug, '/') .
             self::separator('canvas', '/') .
-            $count
+            (string) $count,
         );
 
         Command::output(
             'Fetching ' . $this->index .
-            ($this->label === '' ? '' : ' (' . $this->label . ')') . \PHP_EOL
+            ($this->label === '' ? '' : ' (' . $this->label . ')') . \PHP_EOL,
         );
 
         $annotation = $this->annotation();
@@ -92,6 +89,11 @@ final class PageData extends Data
         return '';
     }
 
+    /**
+     * @throws FilesystemException
+     * @throws InvalidConfigException
+     * @throws JsonException
+     */
     private function annotation(): Annotation
     {
         $annotation = new Annotation();
@@ -100,11 +102,16 @@ final class PageData extends Data
         return $annotation;
     }
 
+    /**
+     * @throws FilesystemException
+     * @throws InvalidConfigException
+     * @throws JsonException
+     */
     private function content(): Content
     {
         $file = file_get_contents($this->uri());
 
-        /** @var array<string, mixed> */
+        /** @var array<string, mixed> $info */
         $info = json_decode($file, true);
 
         $content = new Content();
@@ -137,6 +144,7 @@ final class PageData extends Data
         return $service;
     }
 
+    /** @throws InvalidConfigException */
     private function uri(): string
     {
         \assert($this->settings['presentation'] instanceof PresentationConfig);
@@ -157,6 +165,16 @@ final class PageData extends Data
             $uri .= '&size=' . $this->settings['presentation']->size;
         }
 
+        $uri .= $this->uriExt();
+        $uri .= $this->uriFile();
+
+        return $uri . '/info.json';
+    }
+
+    private function uriExt(): string
+    {
+        \assert($this->settings['presentation'] instanceof PresentationConfig);
+
         $pathinfo = \pathinfo($this->path);
 
         $ext = '';
@@ -165,27 +183,43 @@ final class PageData extends Data
             $ext = $pathinfo['extension'];
         }
 
-        $file = '';
-
-        if (isset($pathinfo['basename'])) {
-            $file = $pathinfo['basename'];
-        }
-
         if (\is_string($this->settings['presentation']->ext)) {
             if ($ext !== $this->settings['presentation']->ext) {
                 $ext = $this->settings['presentation']->ext;
-                $file .= '.' . $ext;
             }
         }
 
         if ($ext !== '') {
-            $uri .= '&ext=' . $ext;
+            return '&ext=' . $ext;
+        }
+
+        return '';
+    }
+
+    private function uriFile(): string
+    {
+        \assert($this->settings['presentation'] instanceof PresentationConfig);
+
+        $pathinfo = \pathinfo($this->path);
+
+        $ext = '';
+
+        if (isset($pathinfo['extension'])) {
+            $ext = $pathinfo['extension'];
+        }
+
+        $file = $pathinfo['basename'];
+
+        if (\is_string($this->settings['presentation']->ext)) {
+            if ($ext !== $this->settings['presentation']->ext) {
+                $file .= '.' . $this->settings['presentation']->ext;
+            }
         }
 
         if ($file !== '') {
-            $uri .= '&file=' . $file;
+            return '&file=' . $file;
         }
 
-        return $uri . '/info.json';
+        return '';
     }
 }

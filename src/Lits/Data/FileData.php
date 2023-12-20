@@ -6,31 +6,41 @@ namespace Lits\Data;
 
 use Lits\Config\PresentationConfig;
 use Lits\Data;
+use Safe\Exceptions\DirException;
+use Safe\Exceptions\FilesystemException;
+use Safe\Exceptions\JsonException;
 
 use function Safe\chdir;
 use function Safe\file_get_contents;
 use function Safe\glob;
 use function Safe\json_decode;
-use function Safe\ksort;
 
 final class FileData extends Data
 {
-    /** @return array<string, mixed> */
+    /**
+     * @return array<array-key, mixed>
+     * @throws DirException
+     * @throws FilesystemException
+     * @throws JsonException
+     */
     public function json(string ...$path): array
     {
-        /** @var array<string, mixed> */
-        return json_decode($this->read(...$path), true);
+        return (array) json_decode($this->read(...$path), true);
     }
 
-    /** @return array<string, ManifestData> */
+    /**
+     * @return array<string, ManifestData>
+     * @throws DirException
+     * @throws FilesystemException
+     */
     public function list(string ...$path): array
     {
         $this->chdir();
 
         $list = [];
 
-        /** @var string $file */
         foreach (glob(\implode(\DIRECTORY_SEPARATOR, $path)) as $file) {
+            \assert(\is_string($file));
             $index = \basename($file);
 
             if ($index === 'manifest') {
@@ -40,15 +50,20 @@ final class FileData extends Data
             $list[$index] = new ManifestData(
                 $index,
                 $this->json($file),
-                $this->settings
+                $this->settings,
             );
         }
 
-        ksort($list);
+        \ksort($list);
 
         return $list;
     }
 
+    /**
+     * @throws DirException
+     * @throws FilesystemException
+     * @throws JsonException
+     */
     public function manifest(string $index): ManifestData
     {
         $path = \explode('/', $index);
@@ -57,10 +72,14 @@ final class FileData extends Data
         return new ManifestData(
             $index,
             $this->json(...$path),
-            $this->settings
+            $this->settings,
         );
     }
 
+    /**
+     * @throws DirException
+     * @throws FilesystemException
+     */
     public function read(string ...$path): string
     {
         $this->chdir();
@@ -68,6 +87,7 @@ final class FileData extends Data
         return file_get_contents(\implode(\DIRECTORY_SEPARATOR, $path));
     }
 
+    /** @throws DirException */
     private function chdir(): void
     {
         \assert($this->settings['presentation'] instanceof PresentationConfig);
