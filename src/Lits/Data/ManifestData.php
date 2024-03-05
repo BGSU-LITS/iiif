@@ -37,7 +37,7 @@ final class ManifestData extends Data
             if (
                 isset($data['label']) &&
                 isset($data['value']) &&
-                $data['label'] !== 'Is Part Of'
+                $data['label'] === 'Is Part Of'
             ) {
                 $this->collection = (string) $data['value'];
 
