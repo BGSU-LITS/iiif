@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if manifests %}
-<table class="table">
+<table class="bgsu_common_table">
 <thead>
 <tr>
 <th>Title</th>
@@ -29,7 +29,7 @@
 {% elseif manifest %}
 {{ parent() }}
 <nav aria-label="breadcrumb">
-<ol class="list-breadcrumb">
+<ol class="bgsu_common_list_breadcrumb">
 <li><a href="{{ url_for('index') }}">{{ settings.template.site }}</a></li>{% if manifest.collection %}<li>{{ manifest.collection }}</li>{% endif %}<li aria-current="page">{{ manifest.title }}</li>
 </ol>
 </nav>
@@ -46,7 +46,7 @@
 <li><a href="{{ url_for('uv', {'index': manifest.index}) }}">Universal Viewer</a></li>
 </ul>
 {% else %}
-<div class="alert alert-failure">
+<div class="bgsu_common_alert bgsu_common_alert__failure">
 No manifests are available.
 </div>
 {% endif %}
